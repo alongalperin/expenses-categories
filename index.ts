@@ -1,4 +1,4 @@
-import express, {Request, Response} from 'express';
+import express, { Request, Response } from 'express';
 const mysql = require('mysql2');
 
 import ShortUniqueId from 'short-unique-id';
