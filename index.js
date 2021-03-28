@@ -7,6 +7,8 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config();
 }
 
+const PORT = process.env.PORT || 8000;
+
 const pool = mysql.createPool({
   host: process.env.DB_HOST,
   user: process.env.DB_USERNAME,
@@ -36,6 +38,7 @@ app.get('/categories', async (req, res) => {
 app.get('/', (req,res) => {
     res.status(200).send('ok');
 });
+
 app.listen(PORT, () => {
   console.log(`[server]: Server is running at https://localhost:${PORT}`);
 });
