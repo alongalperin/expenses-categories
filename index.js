@@ -28,7 +28,8 @@ app.get('/categories', async (req, res) => {
         const [rows,] = await connection.query('SELECT * FROM categories');
         connection.release();
         res.status(200).send(rows)
-    } catch {
+    } catch(e) {
+        console.log(e);
         console.log('cant reach to categories db')
         res.status(500).send();
     }
