@@ -20,7 +20,6 @@ const pool = mysql.createPool({
 
 const app = express();
 app.use(cors());
-const PORT = 8000;
 
 app.get('/categories', async (req, res) => {
     let rows = []
