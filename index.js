@@ -32,6 +32,10 @@ app.get('/categories', async (req, res) => {
         res.status(500).send();
     }
 });
+
+app.get('/', (req,res) => {
+    res.status(200).send('ok');
+});
 app.listen(PORT, () => {
   console.log(`[server]: Server is running at https://localhost:${PORT}`);
 });
