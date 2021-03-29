@@ -1,4 +1,5 @@
 const express = require("express");
+var bodyParser = require('body-parser')
 // import cors from "cors";
 const cors = require("cors");
 const mysql = require('mysql2');
@@ -19,6 +20,7 @@ const pool = mysql.createPool({
 });
 
 const app = express();
+app.use(express.json())
 app.use(cors());
 
 app.get('/categories', async (req, res) => {
@@ -33,6 +35,19 @@ app.get('/categories', async (req, res) => {
         console.log('cant reach to categories db')
         res.status(500).send();
     }
+});
+
+app.post('/categories', async (req, res) => {
+  try {
+      const connection = await pool.promise().getConnection();
+      await connection.query(`INSERT INTO categories (name) VALUES ('${req.body.name}')`);
+      connection.release();
+      res.send()
+  } catch(e) {
+      console.log(e);
+      console.log('cant reach to categories db')
+      res.status(500).send();
+  }
 });
 
 app.get('/', (req,res) => {
