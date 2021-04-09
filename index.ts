@@ -2,8 +2,6 @@ import express, { Request, Response } from 'express';
 import cors from "cors";
 const mysql = require('mysql2');
 
-import ShortUniqueId from 'short-unique-id';
-
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config();
 }
@@ -29,6 +27,11 @@ app.get('/categories', async (req: Request, res: Response) => {
 
   res.status(200).send(rows)
 });
+
+app.get('/healthz', async (req: Request, res: Response) => {
+  res.status(200).send({ response: "success" })
+});
+
 app.listen(PORT, () => {
-  console.log(`[server]: Server is running at https://localhost:${PORT}`);
+  console.log(`[server]: Server is running at http://localhost:${PORT}`);
 });
