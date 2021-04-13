@@ -21,6 +21,8 @@ app.use(cors());
 
 const PORT = 8000;
 app.get('/categories', async (req: Request, res: Response) => {
+  console.log('request for categories');
+
   const connection = await pool.promise().getConnection();
   const [rows,] = await connection.query('SELECT * FROM categories');
   connection.release();
@@ -29,6 +31,7 @@ app.get('/categories', async (req: Request, res: Response) => {
 });
 
 app.get('/healthz', async (req: Request, res: Response) => {
+  console.log('healthz check');
   res.status(200).send({ response: "success" })
 });
 
