@@ -1,4 +1,5 @@
 import express, { Request, Response } from 'express';
+const bodyParser = require('body-parser')
 import cors from "cors";
 const mysql = require('mysql2');
 
@@ -16,10 +17,16 @@ const pool = mysql.createPool({
 });
 
 const app = express();
+app.use(express.json())
 
 app.use(cors());
 
 const PORT = 8000;
+
+app.get('/healthz', async (req: Request, res: Response) => {
+  console.log('healthz check');
+  res.status(200).send({ response: "success" })
+});
 
 app.get('/categories', async (req: Request, res: Response) => {
   console.log('request for categories');
@@ -31,9 +38,17 @@ app.get('/categories', async (req: Request, res: Response) => {
   res.status(200).send(rows)
 });
 
-app.get('/healthz', async (req: Request, res: Response) => {
-  console.log('healthz check');
-  res.status(200).send({ response: "success" })
+app.post('/categories', async (req: Request, res: Response) => {
+  try {
+    const connection = await pool.promise().getConnection();
+    await connection.query(`INSERT INTO categories (name) VALUES ('${req.body.name}')`);
+    connection.release();
+    res.send()
+  } catch (e) {
+    console.log('cant reach to categories db')
+    console.log(e);
+    res.status(500).send();
+  }
 });
 
 app.listen(PORT, () => {
