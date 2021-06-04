@@ -21,7 +21,7 @@ app.use(express.json())
 
 app.use(cors());
 
-const PORT = 8000;
+const PORT = process.env.PORT || 8000;
 
 app.get('/healthz', async (req: Request, res: Response) => {
   console.log('healthz check');
